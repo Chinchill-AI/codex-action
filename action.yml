@@ -43,6 +43,10 @@ inputs:
     description: "Additional args to pass through to `codex exec`. If this value starts with `[`, it will be parsed as a JSON array; otherwise, it will be parsed as a shell-like string."
     required: false
     default: ""
+  codex-global-args:
+    description: "Additional global args to pass to `codex` before `exec`. If this value starts with `[`, it will be parsed as a JSON array; otherwise, it will be parsed as a shell-like string."
+    required: false
+    default: ""
   pass-through-env:
     description: |
       Optional list of environment variable names that should be forwarded to the Codex subprocess.
@@ -301,6 +305,7 @@ runs:
         CODEX_HOME: ${{ steps.resolve_home.outputs.codex-home }}
         CODEX_WORKING_DIRECTORY: ${{ inputs['working-directory'] || github.workspace }}
         CODEX_SANDBOX: ${{ inputs.sandbox }}
+        CODEX_GLOBAL_ARGS: ${{ inputs['codex-global-args'] }}
         CODEX_ARGS: ${{ inputs['codex-args'] }}
         CODEX_OUTPUT_SCHEMA: ${{ inputs['output-schema'] }}
         CODEX_OUTPUT_SCHEMA_FILE: ${{ inputs['output-schema-file'] }}
@@ -318,6 +323,7 @@ runs:
             --output-file "$CODEX_OUTPUT_FILE" \
             --codex-home "$CODEX_HOME" \
             --cd "$CODEX_WORKING_DIRECTORY" \
+            --global-args "$CODEX_GLOBAL_ARGS" \
             --extra-args "$CODEX_ARGS" \
             --output-schema "$CODEX_OUTPUT_SCHEMA" \
             --output-schema-file "$CODEX_OUTPUT_SCHEMA_FILE" \

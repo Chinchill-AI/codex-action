@@ -41,6 +41,7 @@ export async function runCodexExec({
   prompt,
   codexHome,
   cd,
+  globalArgs,
   extraArgs,
   explicitOutputFile,
   outputSchema,
@@ -54,6 +55,7 @@ export async function runCodexExec({
   prompt: PromptSource;
   codexHome: string | null;
   cd: string;
+  globalArgs: Array<string>;
   extraArgs: Array<string>;
   explicitOutputFile: string | null;
   outputSchema: OutputSchemaSource | null;
@@ -127,6 +129,7 @@ export async function runCodexExec({
 
   command.push(
     pathToCodex,
+    ...globalArgs,
     "exec",
     "--skip-git-repo-check",
     "--cd",

@@ -169,6 +169,11 @@ export async function main() {
       parseExtraArgs
     )
     .requiredOption(
+      "--global-args <args>",
+      "Additional global args to pass to `codex` before `exec` as JSON array or shell string.",
+      parseExtraArgs
+    )
+    .requiredOption(
       "--output-file <FILE>",
       "Path where the final message from `codex exec` will be written."
     )
@@ -205,6 +210,7 @@ export async function main() {
         promptFile: string;
         codexHome: string;
         cd: string;
+        globalArgs: Array<string>;
         extraArgs: Array<string>;
         outputFile: string;
         outputSchemaFile: string;
@@ -222,6 +228,7 @@ export async function main() {
           outputFile,
           codexHome,
           cd,
+          globalArgs,
           extraArgs,
           outputSchema,
           outputSchemaFile,
@@ -291,6 +298,7 @@ export async function main() {
           prompt: promptSource,
           codexHome: emptyAsNull(codexHome),
           cd,
+          globalArgs,
           extraArgs,
           explicitOutputFile: emptyAsNull(outputFile),
           outputSchema: outputSchemaSource,
